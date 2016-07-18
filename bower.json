@@ -1,0 +1,25 @@
+{
+  "name": "thought-spot",
+  "description": "Thought Spot Demo Project",
+  "main": "src/index.html",
+  "authors": [
+    "Akash Chavda <akash.chavda@volansystech.com>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/bower-components/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.0",
+    "font-awesome": "^4.6.3",
+    "bootstrap": "^4.0",
+    "tether": "^1.3.3"
+  }
+}

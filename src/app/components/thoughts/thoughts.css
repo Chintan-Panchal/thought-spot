@@ -1,0 +1,86 @@
+.thoughts-title {
+    text-align: center;
+    padding: 10px;
+}
+
+.light-grey {
+    color: #000!important;
+    background-color: #f1f1f1!important;
+}
+
+.card-4 {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)!important;
+    padding: 10px;
+    display: table;
+    margin-bottom: 15px;
+    margin-right: 15px;
+    width: 100%;
+}
+
+.padding-10x {
+    padding: 10px;
+}
+
+.padding-5x {
+    padding: 5px;
+}
+
+.padding-2x {
+    padding: 2px;
+}
+
+.margin-right-16x {
+    margin-right: 16px;
+}
+
+.circle-50p {
+    border-radius: 50%!important;
+}
+
+.left-i {
+    float: left!important
+}
+
+.width-50p {
+    width: 50%;
+}
+
+.width-70p {
+    width: 70%;
+}
+
+.margin-bottom-10x {
+    margin-bottom: 10px;
+}
+
+.margin-left-10x { margin-left: 10px; }
+
+.description {
+    display:inline-block;
+    width:70%;
+    white-space: nowrap;
+    overflow:hidden !important;
+    text-overflow: ellipsis;
+}
+
+.title {
+    display:inline-block;
+    width:80%;
+    white-space: nowrap;
+    overflow:hidden !important;
+    text-overflow: ellipsis;
+}
+
+.commentBtn { vertical-align: top; }
+
+.bgcontainer { background-color: #BFBFBF !important; }
+
+textarea {
+    resize: none;
+}
+
+.commentDiv .name { color: #2b2d2f; font-size: 12px; }
+
+.margin-right-15x { margin-right: 15px;}
+
+.margin-left-0x { margin-left: 0px;}

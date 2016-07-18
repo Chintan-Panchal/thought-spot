@@ -1,0 +1,22 @@
+<div>
+    <h3 align="center">Add Thought</h3>
+    <form role="form"  [ngFormModel]="form" (submit)="onsubmit($event, thought)">
+       <div class="form-group">
+           <label for="name">Name :</label>
+           <input type="text" class="form-control" placeholder="Enter Name" ngControl="Name" [(ngModel)]='thought.name' >
+       </div>
+       <div class="form-group">
+           <label for="title">Title :</label>
+           <input type="text" class="form-control" placeholder="Enter Title" ngControl="Title" [(ngModel)]='thought.title' >
+       </div>
+       <div class="form-group">
+           <label for="description">Description :</label>
+           <input type="text" class="form-control" placeholder="Enter Description" ngControl="Description" [(ngModel)]='thought.description' >
+       </div>
+       <div class="row margin-bottom-10x">
+           <button type="submit" class="btn btn-default" [disabled]="!form.valid">Submit</button>
+           <button type="button" class="btn btn-default" (click)="resetForm();">Reset</button>
+           <button type="button" class="btn btn-default" (click)="goToThoughtsPage();">Back</button>
+       </div>
+    </form>
+</div>
