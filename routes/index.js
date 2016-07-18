@@ -45,9 +45,14 @@ router.param('post', function(req, res, next, id){
 	});
 });
 
-// return single post
-router.get('/posts/:post', function(req, res){
-	res.json(req.post);
+// return single post, retrieve comments along with post
+router.get('/posts/:post', function(req, res, next){
+    req.post.populate('comments', function (err, post) {
+       if(err){
+           return next(err);
+       }
+        res.json(req.post);
+    });
 });
 
 // create upvote route for a particular post
@@ -78,7 +83,7 @@ router.post('/posts/:post/comments', function(req, res, next){
 	});
 });
 
-// Create a route for preloading comment objects
+// Create a route for pre-loading comment objects
 router.param('comment', function(req, res, next, id){
 	var query = Comment.findById(id);
 	query.exec(function(err, comment){
