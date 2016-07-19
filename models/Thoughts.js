@@ -1,15 +1,16 @@
 var mongoose = require('mongoose');
-var postSchema = new mongoose.Schema({
+var thoughtSchema = new mongoose.Schema({
 	title: String,
 	link: String,
 	upvotes: {type:Number, default:0},
 	comments: [{type:mongoose.Schema.Types.ObjectId, ref:'Comment'}]
 });
 
-mongoose.model('Post',postSchema);
+var Thought = mongoose.model('Thought',thoughtSchema);
+module.exports = Thought;
 
 // upvote method
-PostSchema.methods.upvote = function(cb){
+thoughtSchema.methods.upvote = function(cb){
 	this.upvotes += 1;
 	this.save(cb);
 };

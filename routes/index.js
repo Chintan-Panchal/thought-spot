@@ -1,6 +1,6 @@
 var express = require('express');
 var mongoose = require('mongoose');
-var Post = mongoose.model('Post');
+var Thought = mongoose.model('Thought');
 var Comment = mongoose.model('Comment');
 var router = express.Router();
 
@@ -9,76 +9,76 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-// GET all posts
-router.get('/posts', function(req, res, next){
-	Post.find(function(err,posts){
+// GET all thoughts
+router.get('/thoughts', function(req, res, next){
+    Thought.find(function(err,thoughts){
 		if(err){
 			return next(err);
 		}
-		res.json(posts);
+		res.json(thoughts);
 	});
 });
 
-// POST for creating posts
-router.post('/posts', function(req, res, next){
-	var post = new Post(req.body);
-	post.save(function(err, post){
+// POST for creating thoughts
+router.post('/thoughts', function(req, res, next){
+	var thought = new Thought(req.body);
+    thought.save(function(err, thoughts){
 		if(err){
 			return next(err);
 		}
-		res.json(post);
+		res.json(thoughts);
 	});
 });
 
-// Create a route for pre-loading post objects
-router.param('post', function(req, res, next, id){
-	var query = Post.findById(id);
-	query.exec(function(err, post){
+// Create a route for pre-loading thought objects
+router.param('thought', function(req, res, next, id){
+	var query = Thought.findById(id);
+	query.exec(function(err, thoughts){
 		if(err){
 			return next(err);
 		}
-		if(!post){
-			return next(new Error('Can\'t find post'));
+		if(!thoughts){
+			return next(new Error('Can\'t find thoughts'));
 		}
-		req.post = post;
+		req.thought = thoughts;
 		return next();
 	});
 });
 
-// return single post, retrieve comments along with post
-router.get('/posts/:post', function(req, res, next){
-    req.post.populate('comments', function (err, post) {
+// return single thought, retrieve comments along with thought
+router.get('/thoughts/:thought', function(req, res, next){
+    req.thought.populate('comments', function (err, thoughts) {
        if(err){
            return next(err);
        }
-        res.json(req.post);
+        res.json(req.thoughts);
     });
 });
 
-// create upvote route for a particular post
-router.put('/posts/:post/upvote', function(req, res, next){
-	req.post.upvote(function(err, post){
+// create upvote route for a particular thought
+router.put('/thoughts/:thought/upvote', function(req, res, next){
+	req.thought.upvote(function(err, thoughts){
 		if(err){
 			return next(err);
 		}
-		res.json(post);
+		res.json(thoughts);
 	});
 });
 
-// create comment route for a particular post
-router.post('/posts/:post/comments', function(req, res, next){
+// create comment route for a particular thought
+router.post('/thoughts/:thought/comments', function(req, res, next){
 	var comment = new Comment(req.body);
-	comment.post = req.post;
-	comment.save(function(err, comment){
+	comment.thought = req.thought;
+	comment.save(function(err, comments){
 		if(err){
 			return next(err);
 		}
-		req.post.comments.push(comment);
-		req.post.save(function(err, post){
+		req.thought.comments.push(comments);
+		req.thought.save(function(err, thoughts){
 			if(err){
 				return next(err);
 			}
-			res.json(comment);
+			res.json(comments);
 		});
 	});
 });
@@ -86,14 +86,14 @@ router.post('/posts/:post/comments', function(req, res, next){
 // Create a route for pre-loading comment objects
 router.param('comment', function(req, res, next, id){
 	var query = Comment.findById(id);
-	query.exec(function(err, comment){
+	query.exec(function(err, comments){
 		if(err){
 			return next(err);
 		}
-		if(!comment){
+		if(!comments){
 			return next(new Error('Can\'t find comment'));
 		}
-		req.comment = comment;
+		req.comment = comments;
 		return next();
 	});
 });

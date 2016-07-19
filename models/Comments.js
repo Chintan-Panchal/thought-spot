@@ -3,13 +3,14 @@ var commentSchema = new mongoose.Schema({
 	body: String,
 	auther:String,
 	upvotes:{type: Number,default:0},
-	post:{type:mongoose.Schema.Types.ObjectId, ref:'Post'}
+	post:{type:mongoose.Schema.Types.ObjectId, ref:'Thought'}
 });
 
-mongoose.model('Comment', commentSchema);
+var Comment = mongoose.model('Comment', commentSchema);
+module.exports = Comment;
 
 // upvote method
-CommentSchema.methods.upvote = function(cb){
+commentSchema.methods.upvote = function(cb){
 	this.upvotes += 1;
 	this.save(cb);
 };
