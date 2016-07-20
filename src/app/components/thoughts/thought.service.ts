@@ -45,6 +45,10 @@ export class ThoughtService {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
+        let url = this.url.thoughtUpvoteUrl.replace(':id', thoughtId);
+        return this.http.put(url, {})
+            .map(res => res.json());
+
         /*  this.http.post(this.addVoteUrl, body, options)
                 .subscribe(response => {
 

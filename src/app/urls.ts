@@ -9,4 +9,5 @@ export class Url {
         thoughtsUrl: string = this.rootUrl+'thoughts';
         getThoughtUrl: string = this.rootUrl+'thoughts/:id';
         commentUrl: string = this.rootUrl+'thoughts/:id/comments';
+        thoughtUpvoteUrl: string = this.rootUrl+'thoughts/:id/upvote';
 }

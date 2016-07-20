@@ -24,21 +24,15 @@ export class ThoughtDetailComponent implements OnInit, OnDestroy {
     comment: Comment;
     form : ControlGroup;
     sub: any;
+    thoughtId: string = '';
 
     //When page load below method call
     ngOnInit() {
         this.sub = this.route.params.subscribe(params => {
             let id = params['id']; // (+) converts string 'id' to a number
             console.log(id);
-            this.thoughtService.getThought(id)
-                .subscribe(
-                    thought => {
-
-                        this.thought = thought;
-                    },
-                    error => console.error('Error: ' + error),
-                    () => console.log('Completed!')
-                );
+            this.thoughtId = id;
+            this.getThoughtById(id);
         });
     }
 
@@ -57,6 +51,18 @@ export class ThoughtDetailComponent implements OnInit, OnDestroy {
         });
     }
 
+    //Get Thought By thoughtId
+    getThoughtById(id: string) {
+        this.thoughtService.getThought(id)
+            .subscribe(
+                thought => {
+                    this.thought = thought;
+                },
+                error => console.error('Error: ' + error),
+                () => console.log('Completed!')
+            );
+    }
+
     //Handle comment form
     onsubmit(event, thought: Thought, comment:Comment) {
 
@@ -70,6 +76,7 @@ export class ThoughtDetailComponent implements OnInit, OnDestroy {
             .subscribe(
                 (data) => {
                     console.log(data);
+                    this.getThoughtById(thought._id);
                 }
             );
         this.comment = new Comment();

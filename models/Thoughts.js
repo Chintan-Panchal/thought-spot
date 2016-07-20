@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var thoughtSchema = new mongoose.Schema({
+	name: {type: String, default:''},
 	title: {type:String, default:''},
 	description: {type:String, default:''},
 	upvotes: {type:Number, default:0},
