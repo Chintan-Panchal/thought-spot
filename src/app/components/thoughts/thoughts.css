@@ -56,15 +56,13 @@
 .margin-left-10x { margin-left: 10px; }
 
 .description {
-    display:inline-block;
-    width:70%;
+    width:80%;
     white-space: nowrap;
     overflow:hidden !important;
     text-overflow: ellipsis;
 }
 
 .title {
-    display:inline-block;
     width:80%;
     white-space: nowrap;
     overflow:hidden !important;
@@ -84,3 +82,16 @@ textarea {
 .margin-right-15x { margin-right: 15px;}
 
 .margin-left-0x { margin-left: 0px;}
+
+.thought { width: 100%; }
+.thought .featureWidth { width: 130px; display: table-cell; }
+
+.commentForm textarea { width: 41%; margin-right: 10px; display: inline;}
+
+.leftpart { width: 9%; }
+
+@media only screen and (max-width: 991px) {
+    .leftpart { width: 18%; }
+}
+
+.greenClr { color: green; }

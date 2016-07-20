@@ -1,19 +1,32 @@
 <div>
     <!--<div class="pull-left col-sm-2"><img src="assets/img/user.gif"></div>-->
-    <div class="pull-left col-sm-12">
+    <div class="pull-left thought">
         <br/>
         <div>
-            <div><b>{{thought.title}}</b></div>
-            <div>{{thought.description}}</div>
+            <div class="row">
+                <div class="col-md-1 leftpart"><img src="assets/img/user.gif" class="left-i circle-50p" /></div>
+                <div>
+                    <div>{{thought.name}}</div>
+                    <div><b>{{thought.title}}</b></div>
+                    <div>{{thought.description}}</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="leftpart col-md-1 left-i"></div>
+                <div>
+                    <a href="javascript:void(0);" class="fa fa-thumbs-o-up featureWidth" (click)="addUpvote(thought);">upvote
+                        ({{thought.upvotes}})</a>
+                    <a href="javascript:void(0);" class="featureWidth" (click)="getMoreDetails(thought);">comment
+                        ({{thought.comments != undefined ? thought.comments.length : 0}})</a>
+                </div>
+             </div>
         </div>
-        <div class="row margin-left-0x">
-            <a href="javascript:void(0);" class="fa fa-thumbs-o-up" (click)="addUpvote(thought);">upvote({{thought.upvote}})</a> |
-            <a href="javascript:void(0);" (click)="getMoreDetails(thought);">comment({{thought.noOfCommment}})</a>
-         </div>
         <br/>
+        <div class="clearfix"></div>
         <div class="row margin-left-0x">
-            <form role="form" [ngFormModel]="form" (submit)="onsubmit($event, comment)">
-                <textarea cols="40" rows="3" ngControl="Comment" [(ngModel)]='comment.comment'></textarea>
+            <form role="form" [ngFormModel]="form" class="commentForm" (submit)="onsubmit($event, thought, comment)">
+                <textarea cols="40"  class="form-control" rows="3" ngControl="Comment"
+                          [(ngModel)]='comment.comment'></textarea>
                 <button type="submit" class="btn btn-default commentBtn" [disabled]="!form.valid">add comment</button>
             </form>
         </div>
@@ -21,7 +34,7 @@
         <div *ngFor="let comment of thought.comments" class="commentDiv">
             <hr/>
             <div>
-                <div class="name">{{comment.name}}</div>
+                <div class="name">{{comment.author}}</div>
                 <div class="comment">{{comment.comment}}</div>
             </div>
         </div>

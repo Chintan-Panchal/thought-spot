@@ -1,9 +1,9 @@
 var mongoose = require('mongoose');
 var thoughtSchema = new mongoose.Schema({
-	title: String,
-	link: String,
+	title: {type:String, default:''},
+	description: {type:String, default:''},
 	upvotes: {type:Number, default:0},
-	comments: [{type:mongoose.Schema.Types.ObjectId, ref:'Comment'}]
+	comments: [{type:mongoose.Schema.ObjectId, ref:'Comment'}]
 });
 
 var Thought = mongoose.model('Thought',thoughtSchema);

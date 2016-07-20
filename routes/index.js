@@ -6,7 +6,7 @@ var router = express.Router();
 
 // GET home page. 
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+	res.render('index.html');
 });
 
 // GET all thoughts
@@ -21,6 +21,8 @@ router.get('/thoughts', function(req, res, next){
 
 // POST for creating thoughts
 router.post('/thoughts', function(req, res, next){
+	console.log('--------------------------');
+	console.log(req.body);
 	var thought = new Thought(req.body);
     thought.save(function(err, thoughts){
 		if(err){
@@ -51,7 +53,7 @@ router.get('/thoughts/:thought', function(req, res, next){
        if(err){
            return next(err);
        }
-        res.json(req.thoughts);
+        res.json(req.thought);
     });
 });
 
@@ -78,7 +80,7 @@ router.post('/thoughts/:thought/comments', function(req, res, next){
 			if(err){
 				return next(err);
 			}
-			res.json(comments);
+			res.json(thoughts);
 		});
 	});
 });

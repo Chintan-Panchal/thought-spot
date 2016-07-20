@@ -2,7 +2,7 @@
     <h3 class="thoughts-title">Thoughts</h3>
     <div class="row"><button class="fa fa-plus btn btn-default pull-right margin-bottom-10x margin-right-15x"
                              (click)="getAddThoughtPage();">Add Thought</button></div>
-    <div *ngFor="let thought of thoughts; let i = index" class="card-4 light-grey col-lg-5">
+    <div *ngFor="let thought of thoughts; let i = index" class="row thought">
       <!--<div class="col-md-1">Upvote</div>
       <div class="col-md-2"><img src="assets/img/user.gif" class="left-i circle-50p margin-right-16x" /></div>
       <div class="col-md-6">
@@ -13,11 +13,26 @@
       <div class="bottom-align-text col-md-2">
         <div class="pull-right"><a href="javascript:void(0);" (click)="getMoreDetails(thought);">more</a></div>
       </div>-->
-        <div class="row margin-left-10x"><span class="title">{{i+1}}. {{thought.title}}</span>  <!--<span class="description">{{thought.description}}</span>--></div>
-        <div class="row margin-left-10x">
-            <a href="javascript:void(0);" class="fa fa-thumbs-o-up" (click)="addUpvote(thought);">upvote({{thought.upvote}})</a> |
-            <a href="javascript:void(0);" (click)="getMoreDetails(thought);">comment({{thought.noOfCommment}})</a> |
-            <a href="javascript:void(0);" (click)="getMoreDetails(thought);">more</a>
+        <div class="row col-md-12">
+            <!--<span class="title">{{i+1}}</span>-->
+            <div class="col-md-1 leftpart"><img src="assets/img/user.gif" class="left-i circle-50p" /></div>
+            <div class="col-md-6">
+                <div>{{thought.name}}</div>
+                <div class="title">{{thought.title}}</div>
+                <div class="description">{{thought.description}}</div>
+            </div>
         </div>
+        <div class="row">
+            <div class="leftpart col-md-1 left-i"></div>
+            <div class="col-md-6 margin-left-10x">
+                <a href="javascript:void(0);" class="featureWidth" (click)="addUpvote(thought);"><span
+                        class="fa fa-thumbs-o-up"></span>upvote
+                    ({{thought.upvotes}})</a>
+                <a href="javascript:void(0);" class="featureWidth" (click)="getMoreDetails(thought);">comment({{thought
+                    .comments.length}})</a>
+                <a href="javascript:void(0);" class="featureWidth" (click)="getMoreDetails(thought);">more</a>
+            </div>
+        </div>
+        <hr/>
     </div>
 </div>

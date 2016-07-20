@@ -3,42 +3,45 @@ import {Injectable} from '@angular/core';
 import {Thought} from './thought';
 import {Comment} from './comment';
 import {THOUGHTS} from './mock-thought';
-import { Observable } from 'rxjs/Observable';
+import {Observable} from 'rxjs/Observable';
 import {Http, HTTP_PROVIDERS, Headers, RequestOptions, Response} from '@angular/http';
+import {Url} from './../../urls';
 
+/*
+ * Thought Service
+ */
 @Injectable()
 export class ThoughtService {
 
-    thoughtsUrl: string = '';
-    handleThoughtUrl: string = '';
-    getThoughtUrl: string = '';
-    commentUrl: string = '';
+    //Create and initialize required variable
+    constructor(public http:Http, private url: Url) {}
 
-    constructor(public http:Http) {}
-
-    getThoughts() {
-        return THOUGHTS;
-        //return this.http.get(this.thoughtsUrl)
-        //              .map(this.extractData.bind(this))
-        //            .catch(this.handleError.bind(this));
+    //Get All thoughts
+    getThoughts(): Observable<Thought[]> {
+        //return THOUGHTS;
+        return this.http.get(this.url.thoughtsUrl)
+            .map(response => response = response.json());
     }
 
+    //Handle Thought Form
     handleThought(thought: Thought) {
         let body = JSON.stringify(thought);
 
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        /*  this.http.post(this.handleThoughtUrl, body, options)
-              .subscribe(response => {
-
+        return this.http.post(this.url.handleThoughtUrl, body, options)
+            .map(res => res.json());
+             /* .subscribe(response => {
+                  return response;//console.log(response);
               },
               error => {
-
+                  return error;//console.log(error);
               });*/
     }
 
-    addUpvote(thoughtId: number) {
+    //Add upvote for specific thought
+    addUpvote(thoughtId: string) {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
@@ -51,33 +54,36 @@ export class ThoughtService {
                 });*/
     }
 
-    addComment(comment: Comment) {
+    //Add Comment for specific thought
+    addComment(thoughtId: string, comment: Comment) {
+
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        let body = JSON.stringify(comment);
+
+        let url = this.url.commentUrl.replace(':id', thoughtId);
+        return this.http.post(url, body, options)
+            .map(res => res.json());
+    }
+
+    //Get Thought by thoughtId
+    getThought(id: string): Observable<Thought> {
 
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        /*  this.http.post(this.commentUrl, body, options)
-         .subscribe(response => {
-
-         },
-         error => {
-
-         });*/
+        let url = this.url.getThoughtUrl.replace(':id', id);
+        return this.http.get(url, options)
+                      .map(res => res.json());
     }
 
-    getThought(id: number) {
-        console.log(THOUGHTS[id-1]);
-        return THOUGHTS[id-1];
-        //return this.http.get(this.getThoughtUrl)
-        //              .map(this.extractData.bind(this))
-        //            .catch(this.handleError.bind(this));
-    }
-
-    private extractData(res: Response) {
+    //Extract Data from response
+    private extractData(res: Response){
         let body = res.json();
         return body.data || { };
     }
 
+    //Handle error message
     private handleError (error: any) {
         let errMsg = (error.message) ? error.message :
         error.status ? `${error.status} - ${error.statusText}` : 'Server error';

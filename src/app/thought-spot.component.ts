@@ -7,4 +7,7 @@ import {ROUTER_DIRECTIVES} from 'angular2/router';
     templateUrl: 'app/thought-spot.html'
 })
 
+/*
+ * ThoughtSpot component( Application;s main Component)
+ */
 export class ThoughtSpotComponent {}

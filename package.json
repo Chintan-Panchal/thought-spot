@@ -53,6 +53,7 @@
     "express": "~4.13.4",
     "mongoose": "^4.5.4",
     "morgan": "~1.7.0",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "cors": "2.3.0"
   }
 }

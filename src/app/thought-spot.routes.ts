@@ -16,6 +16,7 @@ const DashboardRoutes: RouterConfig = [
     }
 ];
 
+//Default Routes
 const DefaultRoutes = [
   // {path: 'health', component: Dashboard, index : true},
     {path: '', redirectTo: 'thoughts'}

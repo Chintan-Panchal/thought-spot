@@ -5,15 +5,19 @@ import {ThoughtService} from './thought.service';
 import {Observable} from 'rxjs/Rx';
 import {Thought} from './thought';
 import {Comment} from './comment';
+import {Url} from "../../urls";
 
 @Component({
     selector: 'thoughts',
     directives: [ROUTER_DIRECTIVES],
-    providers: [ThoughtService],
+    providers: [ThoughtService, Url],
     templateUrl: 'app/components/thoughts/thought-detail.html',
     styleUrls: ['app/components/thoughts/thoughts.css']
 })
 
+/*
+ * Thought Details Component for show specific thought and add comment
+ */
 export class ThoughtDetailComponent implements OnInit, OnDestroy {
 
     thought: Thought;
@@ -21,47 +25,68 @@ export class ThoughtDetailComponent implements OnInit, OnDestroy {
     form : ControlGroup;
     sub: any;
 
+    //When page load below method call
+    ngOnInit() {
+        this.sub = this.route.params.subscribe(params => {
+            let id = params['id']; // (+) converts string 'id' to a number
+            console.log(id);
+            this.thoughtService.getThought(id)
+                .subscribe(
+                    thought => {
+
+                        this.thought = thought;
+                    },
+                    error => console.error('Error: ' + error),
+                    () => console.log('Completed!')
+                );
+        });
+    }
+
+    //When page close below method call
+    ngOnDestroy() {
+        this.sub.unsubscribe();
+    }
+
+    //Create and initialize require variable
     constructor(private router: Router, private route: ActivatedRoute, private thoughtService: ThoughtService, public builder: FormBuilder){
         this.thought = new Thought();
         this.comment = new Comment();
+        //Add validation in form
         this.form = builder.group({
             'Comment': new Control(this.comment.comment, Validators.required)
         });
     }
 
-    onsubmit(event, comment:Comment) {
+    //Handle comment form
+    onsubmit(event, thought: Thought, comment:Comment) {
 
         event.preventDefault();
         console.log('testing!!');
-        this.comment.name = "username";
+        this.comment.author = "username";
         console.log("user" +JSON.stringify(this.comment));
         let body = JSON.stringify(this.comment);
         console.log(body);
-        this.thoughtService.addComment(this.comment);
+        this.thoughtService.addComment(thought._id, this.comment)
+            .subscribe(
+                (data) => {
+                    console.log(data);
+                }
+            );
         this.comment = new Comment();
     }
 
+    //Go to thought page
     goToThoughtsPage() {
         this.router.navigateByUrl('/thoughts');
     }
 
+    //Get More details for specific thought
     getMoreDetails(thought: Thought) {
-        this.router.navigateByUrl('/thoughts/details/'+thought.id);
+        this.router.navigateByUrl('/thoughts/details/'+thought._id);
     }
 
+    //Add upvote for specific thought
     addUpvote(thought: Thought) {
-        this.thoughtService.addUpvote(thought.id);
-    }
-
-    ngOnInit() {
-        this.sub = this.route.params.subscribe(params => {
-            let id = +params['id']; // (+) converts string 'id' to a number
-            console.log(id);
-            this.thought = this.thoughtService.getThought(id);
-        });
-    }
-
-    ngOnDestroy() {
-        this.sub.unsubscribe();
+        this.thoughtService.addUpvote(thought._id);
     }
 }

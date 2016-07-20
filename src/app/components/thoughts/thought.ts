@@ -1,13 +1,14 @@
 import {Comment} from './comment'
 
+//Thought Bean
 export class Thought {
     constructor() { }
 
-    id:number;
+    _id:string;
     name: string;
     title: string;
     description: string;
-    upvote: number;
+    upvotes: number;
     noOfCommment: number;
     comments: Comment[];
 }

@@ -1,5 +1,6 @@
+//Comment Bean
 export class Comment {
-    id: number;
-    name: string;
+    _id: string;
+    author: string;
     comment: string;
 }
