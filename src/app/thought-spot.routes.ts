@@ -5,7 +5,7 @@ import {ThoughtComponent} from 'app/components/thoughts/thought.component'
 import {AddThoughtComponent} from 'app/components/thoughts/add-thought.component'
 import {ThoughtDetailComponent} from 'app/components/thoughts/thought-detail.component'
 
-// Dashbard Routes
+// Dashboard Routes
 const DashboardRoutes: RouterConfig = [
     {path: 'thoughts', component: DashboardComponent,
     children: [

@@ -31,14 +31,12 @@ export class ThoughtComponent implements OnInit {
 
     //Get All Thoughts
     getThoughts() {
-
         this.thoughtService.getThoughts()
             .subscribe(
             thought => this.thoughts = thought,
             error => console.error('Error: ' + error),
             () => console.log('Completed!')
         );
-
     }
 
     //Get Add Thought Page
@@ -50,10 +48,6 @@ export class ThoughtComponent implements OnInit {
     getMoreDetails(thought: Thought) {
         this.router.navigateByUrl('/thoughts/details/'+thought._id);
     }
-
-    /*addUpvote(noOfUpvote: number, thought: Thought) {
-      noOfUpvote = ++noOfUpvote;
-    }*/
 
     //Add upvote for specific thought
     addUpvote(thought: Thought) {

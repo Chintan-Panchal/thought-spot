@@ -58,13 +58,20 @@ router.get('/thoughts/:thought', function(req, res, next){
 });
 
 // create upvote route for a particular thought
-router.put('/thoughts/:thought/upvote', function(req, res, next){
-	req.thought.upvote(function(err, thoughts){
-		if(err){
-			return next(err);
-		}
-		res.json(thought);
-	});
+router.put('/thoughts/:id/upvote', function(req, res, next){
+    var id = req.params.id;
+    var query = Thought.findById(id);
+    query.exec(function(err, thought){
+        var thoughtVal = new Thought(thought);
+        console.log(thoughtVal);
+        thoughtVal.upvotes = ++thoughtVal.upvotes;
+        thoughtVal.save(function(err, thoughts){
+            if(err){
+                return next(err);
+            }
+            res.json(thoughts);
+        });
+    });
 });
 
 // create comment route for a particular thought
