@@ -11,7 +11,8 @@ router.get('/', function(req, res, next) {
 
 // GET all thoughts
 router.get('/thoughts', function(req, res, next){
-    Thought.find(function(err,thoughts){
+
+    Thought.find().sort({createdDate: -1}).exec(function(err, thoughts) {
 		if(err){
 			return next(err);
 		}
@@ -21,9 +22,8 @@ router.get('/thoughts', function(req, res, next){
 
 // POST for creating thoughts
 router.post('/thoughts', function(req, res, next){
-	console.log('--------------------------');
-	console.log(req.body);
 	var thought = new Thought(req.body);
+
     thought.save(function(err, thoughts){
 		if(err){
 			return next(err);
@@ -63,7 +63,6 @@ router.put('/thoughts/:id/upvote', function(req, res, next){
     var query = Thought.findById(id);
     query.exec(function(err, thought){
         var thoughtVal = new Thought(thought);
-        console.log(thoughtVal);
         thoughtVal.upvotes = ++thoughtVal.upvotes;
         thoughtVal.save(function(err, thoughts){
             if(err){

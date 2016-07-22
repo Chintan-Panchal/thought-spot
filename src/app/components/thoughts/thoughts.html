@@ -1,18 +1,11 @@
-<div>
+<div infinite-scroll
+     [infiniteScrollDistance]="2"
+     [infiniteScrollThrottle]="500"
+     (scrolled)="onScroll(event)">
     <h3 class="thoughts-title">Thoughts</h3>
     <div class="row"><button class="fa fa-plus btn btn-default pull-right margin-bottom-10x margin-right-15x"
                              (click)="getAddThoughtPage();">Add Thought</button></div>
     <div *ngFor="let thought of thoughts; let i = index" class="row thought">
-      <!--<div class="col-md-1">Upvote</div>
-      <div class="col-md-2"><img src="assets/img/user.gif" class="left-i circle-50p margin-right-16x" /></div>
-      <div class="col-md-6">
-        <div class="padding-2x">{{thought.name}}</div>
-        <div class="padding-2x">{{thought.title}}</div>
-        <div class="padding-2x">{{thought.description}}</div>
-      </div>
-      <div class="bottom-align-text col-md-2">
-        <div class="pull-right"><a href="javascript:void(0);" (click)="getMoreDetails(thought);">more</a></div>
-      </div>-->
         <div class="row col-md-12">
             <!--<span class="title">{{i+1}}</span>-->
             <div class="col-md-1 leftpart"><img src="assets/img/user.gif" class="left-i circle-50p" /></div>

@@ -2,8 +2,6 @@ import {Comment} from './comment'
 
 //Thought Bean
 export class Thought {
-    constructor() { }
-
     _id:string;
     name: string;
     title: string;
@@ -11,4 +9,8 @@ export class Thought {
     upvotes: number;
     noOfCommment: number;
     comments: Comment[];
+    createdDate: Date;
+    modifiedDate: Date;
+
+    constructor() { }
 }

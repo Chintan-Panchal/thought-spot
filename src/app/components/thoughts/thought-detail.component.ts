@@ -6,6 +6,7 @@ import {Observable} from 'rxjs/Rx';
 import {Thought} from './thought';
 import {Comment} from './comment';
 import {Url} from "../../urls";
+import * as moment from 'moment';
 
 @Component({
     selector: 'thoughts',
@@ -89,11 +90,22 @@ export class ThoughtDetailComponent implements OnInit, OnDestroy {
 
     //Get More details for specific thought
     getMoreDetails(thought: Thought) {
-        this.router.navigateByUrl('/thoughts/details/'+thought._id);
+        this.router.navigateByUrl('/thoughts/details/'+thought._id)
     }
 
     //Add upvote for specific thought
     addUpvote(thought: Thought) {
-        this.thoughtService.addUpvote(thought._id);
+        this.thoughtService.addUpvote(thought._id)
+            .subscribe(
+                (data) => {
+                    this.getThoughtById(thought._id);
+                }
+            );
+    }
+
+    getDiffBtwDate(createdDate: Date) {
+        let now = new Date();
+        console.log(moment());
+        console.log(now)
     }
 }

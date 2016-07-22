@@ -4,14 +4,31 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+//var index = require('./routes/index');
 
 //Cross origin request.. call api request from another server
-var cors = require('cors');
+/*var cors = require('cors');*/
 
 // MongoDB
 // Connect to our local mongodb instance
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/thoughtSpot');
+
+var mongoURI = "mongodb://localhost/thoughtSpot";
+var connectWithRetry = function() {
+  return mongoose.connect(mongoURI, function(err) {
+    if (err) {
+      console.error('Failed to connect to mongo on startup - retrying in 5 sec', err);
+      setTimeout(connectWithRetry, 1000);
+    }
+  });
+};
+
+connectWithRetry();
+
+mongoose.connection.on('open', function() {
+  console.log("connected to mongodb");
+});
+
 // added Thoughts model
 require('./models/Thoughts');
 
@@ -20,13 +37,24 @@ require('./models/Comments');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var http = require('http');
+var socket = require('socket.io');
 var app = express();
 
-app.use(cors());
+/*app.use(cors());*/
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+//CORS middleware
+var allowCrossDomain = function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+  next();
+}
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -35,7 +63,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(allowCrossDomain);
 app.use('/', routes);
 app.use('/users', users);
 
@@ -73,6 +101,6 @@ app.use(function(err, req, res, next) {
 
 module.exports = app;
 
-var server = app.listen(3001, function(){
-  console.log("Express server listening on port %d in %s mode", server.address().port, app.settings.env);
+var server = http.createServer(app).listen(3001, function() {
+  console.log("Express server listening on port " + 3001);
 });

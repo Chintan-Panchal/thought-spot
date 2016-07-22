@@ -76,7 +76,9 @@ var defaultConfig = {
       'angular2/router': path.join(__dirname, 'node_modules', '@angular', 'router', 'index.js'),
       'angular2/http': path.join(__dirname, 'node_modules', '@angular', 'http', 'index.js'),
       'angular2/http/testing': path.join(__dirname, 'node_modules', '@angular', 'http', 'testing.js'),
-      'angular2/common': path.join(__dirname, 'node_modules', '@angular', 'common', 'index.js')
+      'angular2/common': path.join(__dirname, 'node_modules', '@angular', 'common', 'index.js'),
+      'moment': path.join(__dirname, 'node_modules', 'moment'),
+      'moment-timezone': path.join(__dirname, 'node_modules', 'moment-timezone')
     },
   },
 

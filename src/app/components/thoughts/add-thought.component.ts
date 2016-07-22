@@ -1,6 +1,6 @@
 import {Component, Input} from 'angular2/core';
 import {ROUTER_DIRECTIVES, Router} from 'angular2/router';
-import {FORM_DIRECTIVES, FormBuilder, Control, Validators, ControlGroup, CORE_DIRECTIVES, NgForm, NgFormControl, NgFormModel} from 'angular2/common';
+import {FormBuilder, Control, Validators, ControlGroup, NgForm, NgFormControl, NgFormModel} from 'angular2/common';
 import {Thought} from './thought';
 import {ThoughtService} from './thought.service';
 import {Url} from "../../urls";
@@ -47,20 +47,10 @@ export class AddThoughtComponent {
         this.thoughtService.handleThought(this.thought)
             .subscribe(
                 (data) => {
-                    if(data._id != undefined) {
-                        this.successMessage = "Added Record Successfully";
-                    } else {
-
-                    }
+                    this.successMessage = "Added Record Successfully";
+                    this.thought = new Thought();
                 }
             );
-
-        /*if(res.statusCode == 200) {
-            this.thought = new Thought();
-            this.successMessage = "Added Record Successfully";
-        } else {
-            this.errorMessage = res.error;
-        }*/
     }
 
     //reset Form

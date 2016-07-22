@@ -1,3 +1,11 @@
+declare module "socket.io" {
+  export * from "socket.io";
+}
+
+declare module "socket.io-client" {
+  export * from "socket.io-client";
+}
+
 declare module "angular2/core" {
   export * from '@angular/core';
 }

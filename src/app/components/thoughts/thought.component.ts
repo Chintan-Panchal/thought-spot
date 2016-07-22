@@ -3,10 +3,11 @@ import {ROUTER_DIRECTIVES, Router} from 'angular2/router';
 import {Thought} from './thought';
 import {ThoughtService} from './thought.service';
 import {Url} from "../../urls";
+import {InfiniteScroll} from 'angular2-infinite-scroll';
 
 @Component({
     selector: 'thoughts',
-    directives: [ROUTER_DIRECTIVES],
+    directives: [ROUTER_DIRECTIVES, InfiniteScroll],
     providers: [ThoughtService, Url],
     templateUrl: 'app/components/thoughts/thoughts.html',
     styleUrls: ['app/components/thoughts/thoughts.css']
@@ -51,6 +52,17 @@ export class ThoughtComponent implements OnInit {
 
     //Add upvote for specific thought
     addUpvote(thought: Thought) {
-        this.thoughtService.addUpvote(thought._id);
+        this.thoughtService.addUpvote(thought._id)
+            .subscribe(
+                res => {
+                    this.getThoughts();
+                },
+                error => console.error('Error: ' + error),
+                () => console.log('Completed!')
+            );
+    }
+
+    onScroll() {
+        console.log("event");
     }
 }
