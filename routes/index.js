@@ -23,7 +23,8 @@ router.get('/thoughts', function(req, res, next){
 // POST for creating thoughts
 router.post('/thoughts', function(req, res, next){
 	var thought = new Thought(req.body);
-
+    thought.createdDate = new Date();
+    thought.modifiedDate = new Date();
     thought.save(function(err, thoughts){
 		if(err){
 			return next(err);

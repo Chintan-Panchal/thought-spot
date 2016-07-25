@@ -47,8 +47,7 @@ export class AddThoughtComponent {
         this.thoughtService.handleThought(this.thought)
             .subscribe(
                 (data) => {
-                    this.successMessage = "Added Record Successfully";
-                    this.thought = new Thought();
+                    this.router.navigateByUrl('/thoughts?a=1');
                 }
             );
     }

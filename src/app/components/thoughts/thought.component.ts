@@ -1,5 +1,5 @@
 import {Component, OnInit} from 'angular2/core';
-import {ROUTER_DIRECTIVES, Router} from 'angular2/router';
+import {ROUTER_DIRECTIVES, Router, ActivatedRoute} from 'angular2/router';
 import {Thought} from './thought';
 import {ThoughtService} from './thought.service';
 import {Url} from "../../urls";
@@ -20,14 +20,29 @@ export class ThoughtComponent implements OnInit {
 
     thoughts: Thought[] = [];
     thought: Thought;
+    sub: any;
     errorMessage: string;
+    successMessage: string = '';
 
     //Create and initialize all require variable
-    constructor(private thoughtService: ThoughtService, private router: Router) {}
+    constructor(private thoughtService: ThoughtService, private router: Router, private route: ActivatedRoute) {}
 
     //On page load below method call
     ngOnInit() {
         this.getThoughts();
+
+        this.router
+            .routerState
+            .queryParams
+            .subscribe(params => {
+                let a = params['a'];
+                if(a) {
+                    this.successMessage = "Added Record Successfully";
+                    setTimeout(() => {
+                        this.successMessage = '';
+                    }, 5000);
+                }
+            });
     }
 
     //Get All Thoughts

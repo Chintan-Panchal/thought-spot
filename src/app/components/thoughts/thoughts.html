@@ -3,7 +3,12 @@
      [infiniteScrollThrottle]="500"
      (scrolled)="onScroll(event)">
     <h3 class="thoughts-title">Thoughts</h3>
-    <div class="row"><button class="fa fa-plus btn btn-default pull-right margin-bottom-10x margin-right-15x"
+
+    <div class="row">
+        <div class="greenClr" *ngIf="successMessage">
+            {{successMessage}}
+        </div>
+        <button class="fa fa-plus btn btn-default pull-right margin-bottom-10x margin-right-15x"
                              (click)="getAddThoughtPage();">Add Thought</button></div>
     <div *ngFor="let thought of thoughts; let i = index" class="row thought">
         <div class="row col-md-12">
